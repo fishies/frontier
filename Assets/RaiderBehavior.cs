@@ -8,7 +8,7 @@ public class RaiderBehavior : MonoBehaviour {
     public float movementDuration;
 
     public float timePassed;
-    public bool running = false;
+    public bool running = false; //this flag "running" refers to movement?
 
     public Vector3 target;
     public Vector3 originalPos;
@@ -20,7 +20,7 @@ public class RaiderBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(selected){
+		if(selected){ // ??????
             RaiderMove();
         }
 	}
@@ -32,7 +32,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public void RaiderMove()
     {
-        if(Input.GetMouseButton(1) && !running)
+        if(Input.GetMouseButton(1) && !running) // why have to right-click first??
         {
             running = true;
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -40,7 +40,7 @@ public class RaiderBehavior : MonoBehaviour {
             originalPos = transform.position;
         }
 
-        if (running)
+        else if (running)
         {
             timePassed += Time.deltaTime;
 
