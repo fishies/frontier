@@ -6,14 +6,16 @@ public class InitBoard : MonoBehaviour {
      //Generic gameobject prefabs that can be modified.
      public int Num_Players;
      public GameObject Background_Prefab,
+                       Border_Prefab,
                        City_Prefab,
                        Capital_Prefab;
      private GameObject Background_Instance;
      void Awake() {
           Background_Instance = GameObject.Instantiate(Background_Prefab, transform.localPosition, transform.localRotation);
           Background_Instance.transform.parent = transform;
-          CityInit();
           CapitalInit();
+          BorderInit();
+          CityInit();
      }
 	// Use this for initialization
 	void Start () {
@@ -29,16 +31,21 @@ public class InitBoard : MonoBehaviour {
           return new Vector2(0.0f, 0.0f); //Dummy value
      }
 
-     void CityInit() {
-
-     }
-
      void CapitalInit() {
           List<GameObject> capitals = makeCapitals();
           List<Vector2> capital_locations = getCapitalLocations(capitals[0]);
           for(int c = 0; c < Num_Players; ++c) {
                capitals[c].transform.position = capital_locations[c];
           }
+     }
+
+     void BorderInit() {
+          Vector2 boardCenter = Background_Instance.GetComponent<Collider>().bounds.center;
+          GameObject.Instantiate(Border_Prefab, new Vector2(boardCenter.x, 0.0f), Background_Instance.transform.rotation).transform.parent = Background_Instance.transform;
+     }
+
+     void CityInit() {
+          Collider backgd_collider = Background_Instance.GetComponent<Collider>();
      }
 
      List<GameObject> makeCapitals () {
@@ -56,7 +63,6 @@ public class InitBoard : MonoBehaviour {
           Vector2 boardCenter = backgd_collider.bounds.center,
                   boardExtents = backgd_collider.bounds.extents,
                   capitalExtents = capital_instance.GetComponent<Collider>().bounds.extents;
-
                 
           capital_locations.Add(new Vector2(boardCenter.x + boardExtents.x - capitalExtents.x, boardCenter.y + boardExtents.y - capitalExtents.y));
           capital_locations.Add(new Vector2(boardCenter.x - boardExtents.x + capitalExtents.x, boardCenter.y - boardExtents.y + capitalExtents.y));
