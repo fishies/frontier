@@ -13,6 +13,10 @@ public class InputManager : MonoBehaviour {
 
     private Modes mode; //stores the current input mode
 
+    private RoadPlacer rop;
+    private RaiderPlacer rap;
+    private TowerPlacer tp;
+
     public Modes Mode {
         get {
             return mode;
@@ -26,8 +30,10 @@ public class InputManager : MonoBehaviour {
     private void update_mode() {
         /* To be called when the mode changes,
          * applies associated changes
-         */ 
-          
+         */
+        rop.gameObject.SetActive(mode == Modes.PLACE_ROAD);
+        rap.gameObject.SetActive(mode == Modes.PLACE_RAIDER);
+        tp.gameObject.SetActive(mode == Modes.PLACE_TOWER);
     } 
 
 }
