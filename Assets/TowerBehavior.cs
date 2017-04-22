@@ -10,6 +10,7 @@ public class TowerBehavior : MonoBehaviour {
     RaycastHit2D hit;
     LineRenderer line;
     public int segments;
+    public float setAngle;
 
 
     private GameObject enemySelected; // Need to also check if gameobject actually belongs to the enemy
@@ -58,11 +59,11 @@ public class TowerBehavior : MonoBehaviour {
     public void CreateCircle()
     {
         Debug.Log("works");
-        float angle = 20f;
+        float angle = setAngle;
 
         for (int i = 0; i < (segments + 1); i++)
         {
-            line.SetPosition(i, new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle), 0));
+            line.SetPosition(i, new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle) * towerRange, Mathf.Cos(Mathf.Deg2Rad * angle) * towerRange, 0));
 
             angle += (360f / segments);
         }
