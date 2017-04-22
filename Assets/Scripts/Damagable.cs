@@ -6,7 +6,7 @@ public class Damagable : MonoBehaviour {
     public int health;
 	
 	void Update() {
-        if(health < 0) {
+        if(health <= 0) {
             Destroy(gameObject);
         }
 	}
