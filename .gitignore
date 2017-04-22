@@ -1,5 +1,5 @@
 #make it a whitelist
-*
+/*
 !.gitignore
 
 #do not exclude:
