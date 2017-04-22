@@ -8,14 +8,22 @@ public class PlayerInfo : MonoBehaviour {
 
 	void Start () {
 		stockpile = new int[System.Enum.GetNames (typeof(Production.Resource)).Length];
-		stockpile [Production.Resource.Food] = 6;
-		stockpile [Production.Resource.Lumber] = 6;
-		stockpile [Production.Resource.Cement] = 6;
-		stockpile [Production.Resource.Steel] = 6;
+		stockpile [(int)Production.Resource.Food] = 6;
+		stockpile [(int)Production.Resource.Lumber] = 6;
+		stockpile [(int)Production.Resource.Cement] = 6;
+		stockpile [(int)Production.Resource.Steel] = 6;
 	}
 
 	void CalculateIncome () { //This should be called at the start of the player's turn
-		//Find all GameObjects with Production script component and ownerID == playerID
-		//Change stockpile according to values in Production
+		foreach(Production p in Object.FindObjectsOfType<Production>())
+		{
+			if (p.ownerID == playerID)
+			{
+				foreach(int resource in System.Enum.GetValues(typeof(Production.Resource)))
+				{
+					stockpile [resource] += p.income [resource];
+				}
+			}
+		}
 	}
 }
