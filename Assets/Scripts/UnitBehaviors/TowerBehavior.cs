@@ -63,8 +63,8 @@ public class TowerBehavior : MonoBehaviour {
             if (hit)
             {
                 enemySelected = hit.collider.gameObject;
-                
-                if (enemySelected.tag == "Raider" && Vector3.Distance(enemySelected.transform.GetChild(0).position, transform.GetChild(0).position) <= towerRange)
+
+                if (GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID && Vector3.Distance(enemySelected.transform.GetChild(0).position, transform.GetChild(0).position) <= towerRange)
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                     selected = false;

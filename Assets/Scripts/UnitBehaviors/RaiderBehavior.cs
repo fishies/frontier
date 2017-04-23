@@ -89,12 +89,13 @@ public class RaiderBehavior : MonoBehaviour {
 
             if (timePassed > movementDuration)
             {
-                if (attacking)
+                if (GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID && attacking)
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
                 timePassed = 0f;
                 running = false;
+                attacking = false;
                 selected = false;
                 hasMoved = true;
                 GetComponent<SpriteRenderer>().color = Color.gray;
