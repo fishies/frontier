@@ -9,9 +9,9 @@ public class RaiderPlacer : Placer {
          * if this script is active and it is owned by the active player,
          * place a raider there.
          */
+        
         if (t.GetComponent<Production>().ownerID == spawner.PlayerID) { 
             spawner.Spawn(Spawner.Objs.RAIDER, t.position);
         }
     }
-
 }

@@ -21,15 +21,17 @@ public class InputManager : MonoBehaviour {
         rop = GetComponentInChildren<RoadPlacer>();
         rap = GetComponentInChildren<RaiderPlacer>();
         tp = GetComponentInChildren<TowerPlacer>();
+        update_mode();
     }
 
     public Modes Mode {
         get {
             return mode;
         }
-        set {
+        set {   
             Modes old_mode = mode;
             mode = value;
+            update_mode();
         }
     }
 
