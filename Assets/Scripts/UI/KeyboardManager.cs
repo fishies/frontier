@@ -18,6 +18,8 @@ public class KeyboardManager : MonoBehaviour {
             im.Mode = InputManager.Modes.PLACE_RAIDER;
         } else if (Input.GetKeyDown(KeyCode.Alpha4)) {
             im.Mode = InputManager.Modes.PLACE_TOWER;
+        } else if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)) {
+            im.NextTurn();
         }
         //TODO: insert WASD pan, change turn
 

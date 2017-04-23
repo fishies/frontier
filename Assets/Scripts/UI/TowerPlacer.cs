@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerPlacer : MonoBehaviour {
+public class TowerPlacer : Placer {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void Update() {
+        /* When mouse left clicks, spawn a tower there.
+         */
+        if (Input.GetMouseButtonDown(0)) {
+            spawner.Spawn(Spawner.Objs.TOWER, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
+    }
+
 }

@@ -17,6 +17,12 @@ public class InputManager : MonoBehaviour {
     private RaiderPlacer rap;
     private TowerPlacer tp;
 
+    void Start() {
+        rop = GetComponentInChildren<RoadPlacer>();
+        rap = GetComponentInChildren<RaiderPlacer>();
+        tp = GetComponentInChildren<TowerPlacer>();
+    }
+
     public Modes Mode {
         get {
             return mode;
@@ -35,5 +41,14 @@ public class InputManager : MonoBehaviour {
         rap.gameObject.SetActive(mode == Modes.PLACE_RAIDER);
         tp.gameObject.SetActive(mode == Modes.PLACE_TOWER);
     } 
+
+    public void NextTurn() {
+        /*To be called to end the turn*/
+        FindObjectOfType<GameManager>().NextTurn();
+    }
+
+    public void Pan(int x_dir, int y_dir) {
+        /*be be called to pan the camera*/
+    }
 
 }
