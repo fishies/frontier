@@ -9,8 +9,7 @@ public class TowerBehavior : MonoBehaviour {
     
     RaycastHit2D hit;
     LineRenderer line;
-    public int segments;
-    public float setAngle;
+    public float thetaScale;
 
 
     private GameObject enemySelected; // Need to also check if gameobject actually belongs to the enemy
@@ -18,9 +17,12 @@ public class TowerBehavior : MonoBehaviour {
     // Use this for initialization
     void Start () {
         line = GetComponent<LineRenderer>();
-        line.positionCount = (segments + 1);
+        line.positionCount = (int) ((2.0f * Mathf.PI) / thetaScale) + 1;
         line.useWorldSpace = false;
-	}
+        line.material = new Material(Shader.Find("Particles/Additive"));
+        line.startColor = new Color(1, 0, 0);
+        line.endColor = new Color(1, 0, 0);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,8 +51,9 @@ public class TowerBehavior : MonoBehaviour {
                 Debug.Log(Vector3.Distance(enemySelected.transform.position, transform.position));
                 if (enemySelected.tag == "Raider" && Vector3.Distance(enemySelected.transform.position, transform.position) <= towerRange)
                 {
-                    Debug.Log("Attack");
+                    Debug.Log("Tower Attack");
                     selected = false;
+                    Destroy(line);
                 }
             }
         }
@@ -58,14 +61,13 @@ public class TowerBehavior : MonoBehaviour {
 
     public void CreateCircle()
     {
-        Debug.Log("works");
-        float angle = setAngle;
+        float theta = 0f;
+        float deltaTheta = 2.0f * Mathf.PI * thetaScale;
 
-        for (int i = 0; i < (segments + 1); i++)
+        for (int i = 0; i < (int)((2.0f * Mathf.PI) / thetaScale) + 1; i++)
         {
-            line.SetPosition(i, new Vector3(Mathf.Sin(Mathf.Deg2Rad * angle) * towerRange, Mathf.Cos(Mathf.Deg2Rad * angle) * towerRange, 0));
-
-            angle += (360f / segments);
+            theta += deltaTheta;
+            line.SetPosition(i, new Vector3(Mathf.Cos(theta) * towerRange, Mathf.Sin(theta) * towerRange, 0));
         }
     }
 }
