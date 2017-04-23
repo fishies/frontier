@@ -16,8 +16,17 @@ public class PlayerInfo : MonoBehaviour
 		stockpile [(int)Production.Resource.Steel] = 6;
 	}
 
+	void wipeGraphOwnership ()
+	{
+		foreach (GraphNode node in FindObjectsOfType<GraphNode>()) {
+			node.gameObject.GetComponent<Production> ().ownerID = 0;
+		}
+	}
+
 	List<GraphNode> ConnectedTerritories () //returns what you think it returns based on the name of this function :^)
 	{
+		wipeGraphOwnership ();
+
 		// BFS starting with own capital as root.
 		GraphNode root = gameObject.GetComponent<GraphNode> ();
 
@@ -37,6 +46,10 @@ public class PlayerInfo : MonoBehaviour
 			foreach (GraphNode next in node.neighbors) {
 				toVisit.Enqueue (next);
 			}
+		}
+
+		foreach (GraphNode node in visited) {
+			node.gameObject.GetComponent<Production> ().ownerID = playerID;
 		}
 
 		return visited;
