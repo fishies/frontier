@@ -52,7 +52,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if(!running && !hasMoved)
+        if(GetComponent<Production>().ownerID == GameObject.FindObjectOfType<GameManager>().currentPlayer && !running && !hasMoved)
         {
             selected = !selected;
         }

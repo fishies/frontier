@@ -48,7 +48,7 @@ public class TowerBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if (!hasAttacked)
+        if (GetComponent<Production>().ownerID == GameObject.FindObjectOfType<GameManager>().currentPlayer && !hasAttacked)
         {
             selected = !selected;
         }
