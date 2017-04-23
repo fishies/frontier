@@ -12,6 +12,12 @@ public class Damagable : MonoBehaviour {
 	}
 
     public void takeDamage(int attackStrength) {
-        health = health - attackStrength;
+        if (tag == "Capital") {
+            GetComponent<PlayerInfo>().stockpile[(int)Production.Resource.Food] -= attackStrength;
+        }
+        else
+        {
+            health = health - attackStrength;
+        }
     }
 }
