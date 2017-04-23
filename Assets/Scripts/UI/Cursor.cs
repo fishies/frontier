@@ -20,4 +20,19 @@ public class Cursor : MonoBehaviour {
         currentItemPosition.y -= 20;
         gameObject.transform.position = currentItemPosition;
     }
+
+    void Update() {
+        if(Input.GetKeyDown("1") || Input.GetKeyDown("escape")) {
+            ChangeActiveItem(0);
+        }
+        else if(Input.GetKeyDown("2")) {
+            ChangeActiveItem(1);
+        }
+        else if(Input.GetKeyDown("3")) {
+            ChangeActiveItem(2);
+        }
+        else if(Input.GetKeyDown("4")) {
+            ChangeActiveItem(3);
+        }
+    }
 }
