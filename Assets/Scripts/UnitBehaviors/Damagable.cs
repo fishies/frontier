@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
-	public int health;
+	public int health
+	{
+		get { return health; }
+		set {
+				health = value;
+				text.text = "";
+				for (int i = 0; i < health; ++i) {
+					text.text += "♥";
+				}
+			}
+	}
 	TextMesh text;
 
 	void Awake ()
