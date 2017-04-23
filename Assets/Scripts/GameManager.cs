@@ -19,7 +19,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void NextTurn () {
-		currentPlayer %= playerCount;
+        foreach(TowerBehavior tower in GameObject.FindObjectsOfType<TowerBehavior>())
+        {
+            tower.hasAttacked = false;
+        }
+
+        foreach (RaiderBehavior raider in GameObject.FindObjectsOfType<RaiderBehavior>())
+        {
+            raider.hasMoved = false;
+        }
+
+        currentPlayer %= playerCount;
 		++currentPlayer;
+        
 	}
 }

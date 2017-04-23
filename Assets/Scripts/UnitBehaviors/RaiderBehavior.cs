@@ -22,7 +22,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public LayerMask layersToCheck;
 
-    private bool hasMoved = false;
+    public bool hasMoved = false;
 
     // Use this for initialization
     void Start () {
@@ -52,7 +52,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if(!running && !hasMoved)
+        if(GetComponent<Production>().ownerID == GameObject.FindObjectOfType<GameManager>().currentPlayer && !running && !hasMoved)
         {
             selected = !selected;
         }
@@ -89,7 +89,7 @@ public class RaiderBehavior : MonoBehaviour {
 
             if (timePassed > movementDuration)
             {
-                if (GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID && attacking)
+                if (attacking && GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID)
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
