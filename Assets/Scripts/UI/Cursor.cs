@@ -16,7 +16,7 @@ public class Cursor : MonoBehaviour {
 
     public void ChangeActiveItem(int currentItem) {
         Vector3 currentItemPosition = itemArray[currentItem].transform.position;
-        currentItemPosition.x += 20;
+        currentItemPosition.x += 15;
         currentItemPosition.y -= 20;
         gameObject.transform.position = currentItemPosition;
     }
