@@ -16,7 +16,7 @@ public class TowerBehavior : MonoBehaviour {
 
     public LayerMask layersToCheck;
 
-    private bool hasAttacked = false;
+    public bool hasAttacked = false;
 
     // Use this for initialization
     void Start () {
