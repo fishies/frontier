@@ -22,6 +22,8 @@ public class RoadHandler : MonoBehaviour {
 		currentRotation = currentRotation * Quaternion.AngleAxis(angle + 90, Vector3.forward);
 		gameObject.transform.rotation = currentRotation;
 		gameObject.transform.localScale = new Vector3(1, Vector3.Distance(point1.position, point2.position), 0);
+
+        gameObject.GetComponent<LineRenderer>().material.mainTextureScale = new Vector2(Vector3.Distance(point1.position, point2.position) * 2, 1);
 	}
 
 	public GameObject[] getEndpoints() {
@@ -32,4 +34,8 @@ public class RoadHandler : MonoBehaviour {
 		village1.GetComponent<GraphNode>().neighbors.Remove(village2.GetComponent<GraphNode>());
 		village2.GetComponent<GraphNode>().neighbors.Remove(village1.GetComponent<GraphNode>());
 	}
+
+    private void Start() {
+        setEndpoints(village1.transform, village2.transform);
+    }
 }
