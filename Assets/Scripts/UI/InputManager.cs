@@ -44,6 +44,19 @@ public class InputManager : MonoBehaviour {
         tp.gameObject.SetActive(mode == Modes.PLACE_TOWER);
     } 
 
+    public void removeSelection()
+    {
+        foreach (TowerBehavior tower in GameObject.FindObjectsOfType<TowerBehavior>())
+        {
+            tower.selected = false;
+        }
+
+        foreach (RaiderBehavior raider in GameObject.FindObjectsOfType<RaiderBehavior>())
+        {
+            raider.selected = false;
+        }
+    }
+
     public void NextTurn() {
         /*To be called to end the turn*/
         FindObjectOfType<GameManager>().NextTurn();

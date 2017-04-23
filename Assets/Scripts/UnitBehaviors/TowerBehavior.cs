@@ -12,15 +12,21 @@ public class TowerBehavior : MonoBehaviour {
     LineRenderer line;
     public float thetaScale;
 
-    private GameObject enemySelected; // Need to also check if gameobject actually belongs to the enemy
+    private GameObject enemySelected;
 
     public LayerMask layersToCheck;
 
     public bool hasAttacked = false;
 
+    private InputManager inputManager;
+    private GameManager gameManager;
+
     // Use this for initialization
     void Start () {
-        line = GetComponentInChildren<LineRenderer>();
+        inputManager = GameObject.FindObjectOfType<InputManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+
+    line = GetComponentInChildren<LineRenderer>();
         line.useWorldSpace = false;
         line.material = new Material(Shader.Find("Particles/Additive"));
         line.startColor = new Color(1, 0, 0);
@@ -48,7 +54,7 @@ public class TowerBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if (GetComponent<Production>().ownerID == GameObject.FindObjectOfType<GameManager>().currentPlayer && !hasAttacked)
+        if (InputManager.Modes.SELECT == inputManager.Mode && GetComponent<Production>().ownerID == gameManager.currentPlayer && !hasAttacked)
         {
             selected = !selected;
         }

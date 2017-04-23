@@ -24,8 +24,14 @@ public class RaiderBehavior : MonoBehaviour {
 
     public bool hasMoved = false;
 
+    private InputManager inputManager;
+    private GameManager gameManager;
+
     // Use this for initialization
     void Start () {
+        inputManager = GameObject.FindObjectOfType<InputManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+
         line = GetComponentInChildren<LineRenderer>();
         line.useWorldSpace = false;
         line.material = new Material(Shader.Find("Particles/Additive"));
@@ -52,7 +58,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if(GetComponent<Production>().ownerID == GameObject.FindObjectOfType<GameManager>().currentPlayer && !running && !hasMoved)
+        if(InputManager.Modes.SELECT == inputManager.Mode && GetComponent<Production>().ownerID == gameManager.currentPlayer && !running && !hasMoved)
         {
             selected = !selected;
         }
