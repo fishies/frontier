@@ -87,13 +87,13 @@ public class Spawner : MonoBehaviour {
             throw new SpawnException();
         }
         int price = GetRoadPrice(t_one, t_two);
-        int owner_one = t_one.GetComponent<Production>().ownerID;
-        int owner_two = t_two.GetComponent<Production>().ownerID;
         //conditions for being allowed to build a road:
         if (can_pay(cost_types[(int)type], price)) {
             pay(cost_types[(int)type], price);
             GameObject go = Instantiate(road);
             go.GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
+            t_one.GetComponent<Production>().ownerID = PlayerID;
+            t_two.GetComponent<Production>().ownerID = PlayerID;
             return true;
         } else {
             return false;
