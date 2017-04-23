@@ -52,20 +52,22 @@ public class Spawner : MonoBehaviour {
         /* Spawns a raider or tower;
          * Use other overload for road;
          */
+        pos.z = 0;
+
         if(type == Objs.ROAD) {
             throw new SpawnException();
         }
         if(can_pay(cost_types[(int)type], costs[(int)type])){
             GameObject go = null;
             if(type == Objs.RAIDER) {
-                go = Instantiate(raider);
+                go = Instantiate(raider, pos, new Quaternion(0, 0, 0, 0));
 				go.GetComponent<Production>().income[(int) Production.Resource.Food] -= 1; //LOL MAGIC NUMBER :^)
             }else if(type == Objs.TOWER) {
-                go = Instantiate(tower);
+                go = Instantiate(tower, pos, new Quaternion(0, 0, 0, 0));
             }
             pay(cost_types[(int)type], costs[(int)type]);
             go.GetComponent<Production>().ownerID = PlayerID;
-            go.transform.position = pos;
+            //go.transform.position = pos;
             return true;
         }else {
             return false;
