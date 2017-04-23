@@ -22,6 +22,8 @@ public class RaiderBehavior : MonoBehaviour {
 
     public LayerMask layersToCheck;
 
+    private bool hasMoved = false;
+
     // Use this for initialization
     void Start () {
         line = GetComponentInChildren<LineRenderer>();
@@ -33,9 +35,14 @@ public class RaiderBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (selected){
+		if (selected) {
+            GetComponent<SpriteRenderer>().color = Color.red;
             CreateCircle();
             RaiderOptions();
+        }
+        else if (!selected && !hasMoved) {
+            GetComponent<SpriteRenderer>().color = Color.white;
+            line.positionCount = 0;
         }
         else
         {
@@ -45,7 +52,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if(!running)
+        if(!running && !hasMoved)
         {
             selected = !selected;
         }
@@ -89,6 +96,8 @@ public class RaiderBehavior : MonoBehaviour {
                 timePassed = 0f;
                 running = false;
                 selected = false;
+                hasMoved = true;
+                GetComponent<SpriteRenderer>().color = Color.gray;
             }
         }
     }

@@ -5,8 +5,18 @@ using UnityEngine;
 public class VillageClick : MonoBehaviour {
 
     private void OnMouseDown() {
-        Placer p = GameObject.FindObjectOfType<Placer>();
+        Placer p = null;
+        foreach(Placer place in GameObject.FindObjectsOfType<Placer>())
+        {
+            if (place.gameObject.activeSelf)
+            {
+                p = place;
+                break;
+            }
+        }
+
         if(p != null) {
+            Debug.Log(p);
             p.VillagePlace(transform);
         }
     }

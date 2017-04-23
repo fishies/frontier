@@ -12,10 +12,11 @@ public class TowerBehavior : MonoBehaviour {
     LineRenderer line;
     public float thetaScale;
 
-
     private GameObject enemySelected; // Need to also check if gameobject actually belongs to the enemy
 
     public LayerMask layersToCheck;
+
+    private bool hasAttacked = false;
 
     // Use this for initialization
     void Start () {
@@ -30,8 +31,14 @@ public class TowerBehavior : MonoBehaviour {
 	void Update () {
         if (selected)
         {
+            GetComponent<SpriteRenderer>().color = Color.red;
             CreateCircle();
             TowerOptions();
+        }
+        else if (!selected && !hasAttacked)
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+            line.positionCount = 0;
         }
         else
         {
@@ -41,7 +48,10 @@ public class TowerBehavior : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        selected = !selected;
+        if (!hasAttacked)
+        {
+            selected = !selected;
+        }
     }
 
     public void TowerOptions()
@@ -58,6 +68,8 @@ public class TowerBehavior : MonoBehaviour {
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                     selected = false;
+                    hasAttacked = true;
+                    GetComponent<SpriteRenderer>().color = Color.gray;
                 }
             }
         }
