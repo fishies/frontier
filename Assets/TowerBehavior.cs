@@ -15,6 +15,8 @@ public class TowerBehavior : MonoBehaviour {
 
     private GameObject enemySelected; // Need to also check if gameobject actually belongs to the enemy
 
+    public LayerMask layersToCheck;
+
     // Use this for initialization
     void Start () {
         line = GetComponentInChildren<LineRenderer>();
@@ -46,16 +48,14 @@ public class TowerBehavior : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(1))
         {
-            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, layersToCheck);
 
             if (hit)
             {
                 enemySelected = hit.collider.gameObject;
-
-                Debug.Log(Vector3.Distance(enemySelected.transform.GetChild(0).position, transform.GetChild(0).position));
+                
                 if (enemySelected.tag == "Raider" && Vector3.Distance(enemySelected.transform.GetChild(0).position, transform.GetChild(0).position) <= towerRange)
                 {
-                    Debug.Log("turret attack");
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                     selected = false;
                 }

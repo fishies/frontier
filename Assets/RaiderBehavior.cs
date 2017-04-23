@@ -15,11 +15,12 @@ public class RaiderBehavior : MonoBehaviour {
 
     private Vector3 target;
     private Vector3 originalPos;
-
     public float raiderRange;
     RaycastHit2D hit;
     LineRenderer line;
     public float thetaScale;
+
+    public LayerMask layersToCheck;
 
     // Use this for initialization
     void Start () {
@@ -57,9 +58,7 @@ public class RaiderBehavior : MonoBehaviour {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             target.z = 0;
 
-            hit = Physics2D.Raycast(target, Vector2.zero);
-
-            Debug.Log(Vector3.Distance(target, transform.GetChild(0).position));
+            hit = Physics2D.Raycast(target, Vector2.zero, Mathf.Infinity, layersToCheck);
 
             if (hit && Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
@@ -76,14 +75,14 @@ public class RaiderBehavior : MonoBehaviour {
         }
 
         if (running)
-        { 
+        {
             timePassed += Time.deltaTime;
 
             transform.position = Vector3.Lerp(originalPos, target, timePassed / movementDuration);
 
             if (timePassed > movementDuration)
             {
-                if (attacking && enemySelected.tag != "Raider")
+                if (attacking)
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
