@@ -16,11 +16,17 @@ public class RoadHandler : MonoBehaviour {
         float angle = Mathf.Atan(Mathf.Abs(point2.position.y - point1.position.y) /
                                                                  Mathf.Abs(point2.position.x - point1.position.x)) * Mathf.Rad2Deg;
         Quaternion currentRotation = transform.rotation;
-        currentRotation = currentRotation * Quaternion.AngleAxis(angle, Vector3.forward);
+        currentRotation = currentRotation * Quaternion.AngleAxis(angle + 90, Vector3.forward);
         gameObject.transform.rotation = currentRotation;
+
+        gameObject.transform.localScale = new Vector3(1, Vector3.Distance(point1.position, point2.position), 0);
     }
 
     public GameObject[] getEndpoints() {
         return (new GameObject[] {village1, village2});
+    }
+
+    private void Start() {
+        setEndpoints(village1.transform, village2.transform);
     }
 }
