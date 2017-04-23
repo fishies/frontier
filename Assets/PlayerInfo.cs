@@ -14,10 +14,6 @@ public class PlayerInfo : MonoBehaviour
 		stockpile [(int)Production.Resource.Lumber] = 6;
 		stockpile [(int)Production.Resource.Cement] = 6;
 		stockpile [(int)Production.Resource.Steel] = 6;
-
-		foreach (GraphNode node in ConnectedTerritories()) {
-			node.gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
-		}
 	}
 
 	List<GraphNode> ConnectedTerritories () //returns what you think it returns based on the name of this function :^)
