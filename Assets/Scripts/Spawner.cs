@@ -59,6 +59,7 @@ public class Spawner : MonoBehaviour {
             GameObject go = null;
             if(type == Objs.RAIDER) {
                 go = Instantiate(raider);
+				go.GetComponent<Production>().income[Production.Resource.Food] -= 1; //LOL MAGIC NUMBER :^)
             }else if(type == Objs.TOWER) {
                 go = Instantiate(tower);
             }
