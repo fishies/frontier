@@ -16,7 +16,7 @@ public class VillageClick : MonoBehaviour {
         }
 
         if(p != null) {
-            Debug.Log(p);
+            Debug.Log(p.ToString()+" "+transform.ToString());
             p.VillagePlace(transform);
         }
     }

@@ -12,8 +12,7 @@ public class RoadPlacer : Placer {
     }
 
     public override void VillagePlace(Transform t) {
-        Debug.Log(t_one);
-
+        Debug.Log("Villages that are null: "+(t_one == null).ToString()+" "+(t == null).ToString());
         if (t.GetComponent<Production>().ownerID == 0 ||
                 t.GetComponent<Production>().ownerID == spawner.PlayerID)
         { //if it is not an enemy village
@@ -21,6 +20,7 @@ public class RoadPlacer : Placer {
                     (t.GetComponent<Production>().ownerID == spawner.PlayerID ||
                     t_one.GetComponent<Production>().ownerID == spawner.PlayerID)
             ) { //if the other village has been selected, and atleast one of them belongs to the active player
+                //Debug.Log("Spawning road from " + t_one.ToString() + " to " + t.ToString());
                 spawner.Spawn(Spawner.Objs.ROAD, t_one, t);
                 t_one = null;
             }else {

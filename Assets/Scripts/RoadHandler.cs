@@ -7,6 +7,10 @@ public class RoadHandler : MonoBehaviour {
 	public GameObject village2;
 
 	public void setEndpoints(Transform point1, Transform point2) {
+
+        village1 = point1.gameObject;
+        village2 = point2.gameObject;
+
 		village1.GetComponent<GraphNode>().neighbors.Add(village2.GetComponent<GraphNode>());
 		village2.GetComponent<GraphNode>().neighbors.Add(village1.GetComponent<GraphNode>());
 
