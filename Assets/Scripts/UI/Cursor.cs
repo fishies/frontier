@@ -9,9 +9,9 @@ public class Cursor : MonoBehaviour {
     void Start() {
         im = FindObjectOfType<InputManager>();
         itemArray = new GameObject[4] {GameObject.Find("Cursor"),
-                                                GameObject.Find("Road"),
-                                                GameObject.Find("Raider"),
-                                                GameObject.Find("Tower")};
+                                                GameObject.Find("RoadIcon"),
+                                                GameObject.Find("RaiderIcon"),
+                                                GameObject.Find("TowerIcon")};
     }
 
     public void ChangeActiveItem(int currentItem) {
