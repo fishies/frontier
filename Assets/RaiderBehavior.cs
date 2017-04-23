@@ -6,10 +6,12 @@ public class RaiderBehavior : MonoBehaviour {
 
     public bool selected = false;
     public float movementDuration;
+    public int attackValue;
 
     private float timePassed;
     private bool running = false;
     private bool attacking = false;
+    private GameObject enemySelected;
 
     private Vector3 target;
     private Vector3 originalPos;
@@ -21,8 +23,7 @@ public class RaiderBehavior : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        line = GetComponent<LineRenderer>();
-        line.positionCount = (int)((2.0f * Mathf.PI) / thetaScale) + 1;
+        line = GetComponentInChildren<LineRenderer>();
         line.useWorldSpace = false;
         line.material = new Material(Shader.Find("Particles/Additive"));
         line.startColor = new Color(1, 0, 0);
@@ -35,7 +36,11 @@ public class RaiderBehavior : MonoBehaviour {
             CreateCircle();
             RaiderOptions();
         }
-	}
+        else
+        {
+            line.positionCount = 0;
+        }
+    }
 
     public void OnMouseDown()
     {
@@ -54,13 +59,16 @@ public class RaiderBehavior : MonoBehaviour {
 
             hit = Physics2D.Raycast(target, Vector2.zero);
 
-            if (hit)
+            Debug.Log(Vector3.Distance(target, transform.GetChild(0).position));
+
+            if (hit && Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
                 running = true;
                 attacking = true;
+                enemySelected = hit.collider.gameObject;
                 originalPos = transform.position;
 
-            } else
+            } else if (Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
                 running = true;
                 originalPos = transform.position;
@@ -68,27 +76,27 @@ public class RaiderBehavior : MonoBehaviour {
         }
 
         if (running)
-        {
+        { 
             timePassed += Time.deltaTime;
 
             transform.position = Vector3.Lerp(originalPos, target, timePassed / movementDuration);
 
             if (timePassed > movementDuration)
             {
-                if (attacking)
+                if (attacking && enemySelected.tag != "Raider")
                 {
-                    Debug.Log("Raider Attack");
+                    enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
-                timePassed = 0;
+                timePassed = 0f;
                 running = false;
                 selected = false;
-                Destroy(line);
             }
         }
     }
 
     public void CreateCircle()
     {
+        line.positionCount = (int)((2.0f * Mathf.PI) / thetaScale) + 1;
         float theta = 0f;
         float deltaTheta = 2.0f * Mathf.PI * thetaScale;
 
