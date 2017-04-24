@@ -118,13 +118,12 @@ public class BetterGameInit : MonoBehaviour {
                     Production p = village.GetComponent<Production>();
                     SpriteRenderer s = village.GetComponent<SpriteRenderer>();
                     TextMesh t = village.GetComponentInChildren<TextMesh>();
-                    p.ownerID = 1;
+                    p.ownerID = 0;
                     // i need to set: village income, sprite, and text number indicating size
                     t.text = villageSize[i].ToString();
                     switch (villageType[i]) {
                         case Production.Resource.Food:
                             p.income[(int)Production.Resource.Food] = 2 + villageSize[i];
-                            s.sprite = ironImg;
                             s.sprite = farmImg;
                             break;
                         case Production.Resource.Cement:
@@ -162,6 +161,11 @@ public class BetterGameInit : MonoBehaviour {
             for (int col = row + 2; col < boardX; ++col, --i) {
                 if (villageSize[i] > 0) {
                     //do math with row/col num to get screen coords
+                    /*Vector3 spawnLoc = Vector3.Reflect(Vector3.Reflect(Vector3.Reflect(
+                        new Vector3(cellSize.x * col + positionWithinCell[i].x - Mathf.Abs(topLeft.x),
+                            (cellSize.y * row + positionWithinCell[i].y - Mathf.Abs(topLeft.y)), 0.0f),
+                        Vector3.up), Vector3.up), Vector3.up);*/
+
                     Vector3 spawnLoc = Vector3.Reflect(
                         new Vector3(cellSize.x * col - positionWithinCell[i].x - Mathf.Abs(topLeft.x),
                             (cellSize.y * row - positionWithinCell[i].y - Mathf.Abs(topLeft.y)), 0.0f),
@@ -169,9 +173,9 @@ public class BetterGameInit : MonoBehaviour {
                     //instantiate based on production type
                     GameObject village = Instantiate(villagePrefab, spawnLoc, Quaternion.identity);
                     Production p = village.GetComponent<Production>();
-                    SpriteRenderer s = GetComponent<SpriteRenderer>();
-                    TextMesh t = GetComponentInChildren<TextMesh>();
-                    p.ownerID = 2;
+                    SpriteRenderer s = village.GetComponent<SpriteRenderer>();
+                    TextMesh t = village.GetComponentInChildren<TextMesh>();
+                    p.ownerID = 0;
                     // i need to set: village income, sprite, and text number indicating size
                     t.text = villageSize[i].ToString();
                     switch (villageType[i]) {
@@ -198,7 +202,7 @@ public class BetterGameInit : MonoBehaviour {
                             break;
                     }
                     if(i == fIndex) {
-                        makeCap(2, new Vector3(topLeft.x * -1, topLeft.y , 0),  village.transform);
+                        makeCap(2, new Vector3((topLeft.x + 3) * -1, (topLeft.y + 3), 0),  village.transform);
                     }
                 }
             }
@@ -209,13 +213,15 @@ public class BetterGameInit : MonoBehaviour {
         /*creates a captial, at the given position, for the given player, with the given starting farm*/
         GameObject cap = GameObject.Instantiate(capitalPrefab);
         cap.transform.position = pos;
+        PlayerInfo pi = cap.GetComponent<PlayerInfo>();
+        pi.playerID = player;
         Production p = cap.GetComponent<Production>();
         p.income[(int)Production.Resource.Food] = -1;
         p.income[(int)Production.Resource.Cement] = 7;
         p.income[(int)Production.Resource.Steel] = 5;
         p.income[(int)Production.Resource.Lumber] = 5;
         p.ownerID = player;
-        cap.GetComponent<Spawner>().Spawn(Spawner.Objs.ROAD, cap.transform, farm);
+        cap.GetComponent<Spawner>().SpawnFirstRoad(Spawner.Objs.ROAD, cap.transform, farm, player);
 	}
 
 	/*

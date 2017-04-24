@@ -109,4 +109,11 @@ public class Spawner : MonoBehaviour {
             return false;
         }
     }
+
+    public void SpawnFirstRoad(Objs type, Transform t_one, Transform t_two, int id)
+    {
+        GameObject go = Instantiate(road);
+        go.transform.GetChild(0).GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
+        t_two.GetComponent<Production>().ownerID = id;
+    }
 }

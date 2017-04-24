@@ -37,8 +37,8 @@ public class GameManager : MonoBehaviour {
         {
             if (pi.playerID == currentPlayer) {
                 pi.CalculateIncome();
+                break;
             }
-            break;
         }
     }
 }
