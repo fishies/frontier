@@ -59,15 +59,15 @@ public class Spawner : MonoBehaviour {
         }
         if(can_pay(cost_types[(int)type], costs[(int)type])){
             GameObject go = null;
-            AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
+            //AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
 
             if(type == Objs.RAIDER) {
                 go = Instantiate(raider, pos, new Quaternion(0, 0, 0, 0));
 				go.GetComponent<Production>().income[(int) Production.Resource.Food] -= 1; //LOL MAGIC NUMBER :^)
-                audioSources[2].Play();
+                //audioSources[2].Play();
             }else if(type == Objs.TOWER) {
                 go = Instantiate(tower, pos, new Quaternion(0, 0, 0, 0));
-                audioSources[4].Play();
+                //audioSources[4].Play();
             }
             pay(cost_types[(int)type], costs[(int)type]);
             go.GetComponent<Production>().ownerID = PlayerID;
@@ -88,7 +88,7 @@ public class Spawner : MonoBehaviour {
         /* handles the unique obstancles of spawning a road
          */
 
-        AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
+        //AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
 
         if(type != Objs.ROAD) {
             throw new SpawnException();
@@ -98,7 +98,7 @@ public class Spawner : MonoBehaviour {
         if (can_pay(cost_types[(int)type], price)) {
             pay(cost_types[(int)type], price);
             GameObject go = Instantiate(road);
-            audioSources[4].Play();
+            //audioSources[4].Play();
             go.GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
             t_one.GetComponent<Production>().ownerID = PlayerID;
             t_two.GetComponent<Production>().ownerID = PlayerID;

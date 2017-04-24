@@ -23,20 +23,20 @@ public class Damagable : MonoBehaviour
 	{
 		Production p = gameObject.GetComponent<Production> ();
 		text = gameObject.GetComponentInChildren<TextMesh> ();
-		text.color = Color.black;
+		//text.color = Color.black;
 		if (p != null) {
 			// text.color [(p.ownerID % 3)] = 1.0f;
 			// Cannot modify a value type return value of 'UnityEngine.TextMesh.color'??????
 
 			switch (p.ownerID % 5) {
 			case 0:
-				text.color = Color.red;
-				break;
-			case 1:
 				text.color = Color.green;
 				break;
-			case 2:
+			case 1:
 				text.color = Color.blue;
+				break;
+			case 2:
+				text.color = Color.red;
 				break;
 			case 3:
 				text.color = Color.yellow;
@@ -52,9 +52,9 @@ public class Damagable : MonoBehaviour
 
     void Start() {
         if(GetComponent<RoadHandler>() == null) {
-            health = 2;
-        } else {
             health = 3;
+        } else {
+            health = 2;
         }
     }
 
