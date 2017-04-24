@@ -28,7 +28,19 @@ public class KeyboardManager : MonoBehaviour {
             im.removeSelection();
             im.Mode = InputManager.Modes.SELECT;
         }
-        //TODO: insert WASD pan, change turn
+        //panning 
+        if (Input.GetKey(KeyCode.W)) {
+            im.Pan(0, 1);
+        }
+        if (Input.GetKey(KeyCode.A)) {
+            im.Pan(-1, 0);
+        }
+        if (Input.GetKey(KeyCode.S)) {
+            im.Pan(0, -1);
+        }
+        if (Input.GetKey(KeyCode.D)) {
+            im.Pan(1, 0);
+        }
 
     }
 

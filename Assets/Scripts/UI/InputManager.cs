@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour {
 
     public enum Modes { SELECT, PLACE_ROAD, PLACE_RAIDER, PLACE_TOWER };
 
+    public float PanSpeed = 0.05f;
+
     private Modes mode; //stores the current input mode
 
     private RoadPlacer rop;
@@ -65,6 +67,8 @@ public class InputManager : MonoBehaviour {
 
     public void Pan(int x_dir, int y_dir) {
         /*be be called to pan the camera*/
+        Transform t = Camera.main.transform;
+        t.position = new Vector3(t.position.x + x_dir * PanSpeed, t.position.y + y_dir * PanSpeed, t.position.z);
     }
 
 }
