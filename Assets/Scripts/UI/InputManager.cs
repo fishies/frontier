@@ -47,7 +47,7 @@ public class InputManager : MonoBehaviour {
         tp.gameObject.SetActive(mode == Modes.PLACE_TOWER);
     } 
 
-    public void removeSelection()
+    public void RemoveSelection()
     {
         foreach (TowerBehavior tower in GameObject.FindObjectsOfType<TowerBehavior>())
         {
@@ -58,6 +58,11 @@ public class InputManager : MonoBehaviour {
         {
             raider.selected = false;
         }
+    }
+
+    public void ClearVillageSelection()
+    {
+        rop.VillageOne = null;
     }
 
     public void NextTurn() {
