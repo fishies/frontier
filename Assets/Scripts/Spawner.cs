@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour {
 
     private static Production.Resource[] cost_types;
     private static int[] costs;
-    private AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
 
     void Start() {
         pi = GetComponent<PlayerInfo>();
@@ -33,7 +32,7 @@ public class Spawner : MonoBehaviour {
         costs[(int)Objs.ROAD] = 5;
         costs[(int)Objs.RAIDER] = 7;
         costs[(int)Objs.TOWER] = 10;
-    }
+}
 
     public int PlayerID {
         get {
@@ -60,6 +59,8 @@ public class Spawner : MonoBehaviour {
         }
         if(can_pay(cost_types[(int)type], costs[(int)type])){
             GameObject go = null;
+            AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
+
             if(type == Objs.RAIDER) {
                 go = Instantiate(raider, pos, new Quaternion(0, 0, 0, 0));
 				go.GetComponent<Production>().income[(int) Production.Resource.Food] -= 1; //LOL MAGIC NUMBER :^)
@@ -85,7 +86,10 @@ public class Spawner : MonoBehaviour {
 
     public bool Spawn (Objs type, Transform t_one, Transform t_two) {
         /* handles the unique obstancles of spawning a road
-         */ 
+         */
+
+        AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
+
         if(type != Objs.ROAD) {
             throw new SpawnException();
         }
@@ -103,6 +107,4 @@ public class Spawner : MonoBehaviour {
             return false;
         }
     }
-
-
 }
