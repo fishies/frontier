@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RaiderBehavior : MonoBehaviour {
+    Animator anim;
 
     public bool selected = false;
     public float movementDuration;
@@ -29,6 +30,8 @@ public class RaiderBehavior : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        anim = GetComponent<Animator>();
+
         inputManager = GameObject.FindObjectOfType<InputManager>();
         gameManager = GameObject.FindObjectOfType<GameManager>();
 
@@ -75,6 +78,7 @@ public class RaiderBehavior : MonoBehaviour {
 
             if (hit && Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
+                anim.SetBool("Walk", true);
                 running = true;
                 attacking = true;
                 enemySelected = hit.collider.gameObject;
@@ -82,6 +86,7 @@ public class RaiderBehavior : MonoBehaviour {
 
             } else if (Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
+                anim.SetBool("Walk", true);
                 running = true;
                 originalPos = transform.position;
             }
@@ -100,6 +105,7 @@ public class RaiderBehavior : MonoBehaviour {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
                 timePassed = 0f;
+                anim.SetBool("Walk", false);
                 running = false;
                 attacking = false;
                 selected = false;
