@@ -98,7 +98,10 @@ public class RaiderBehavior : MonoBehaviour {
 
             if (timePassed > movementDuration)
             {
-                if (attacking && GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID)
+                if (attacking && enemySelected.GetComponent<RoadHandler>() != null)
+                {
+                    enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
+                } else if (attacking && GetComponent<Production>().ownerID != enemySelected.GetComponent<Production>().ownerID)
                 {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
