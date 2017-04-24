@@ -1,4 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+﻿//Code taken from http://schemingdeveloper.com/2014/10/15/tiling-sprites-unity/
 
 Shader "Custom/TileShader" {
 	Properties
