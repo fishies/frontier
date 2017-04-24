@@ -78,7 +78,6 @@ public class RaiderBehavior : MonoBehaviour {
 
             if (hit && Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
-                anim.SetBool("Walk", true);
                 running = true;
                 attacking = true;
                 enemySelected = hit.collider.gameObject;
@@ -86,7 +85,6 @@ public class RaiderBehavior : MonoBehaviour {
 
             } else if (Vector3.Distance(target, transform.GetChild(0).position) <= raiderRange)
             {
-                anim.SetBool("Walk", true);
                 running = true;
                 originalPos = transform.position;
             }
@@ -105,7 +103,6 @@ public class RaiderBehavior : MonoBehaviour {
                     enemySelected.GetComponent<Damagable>().takeDamage(attackValue);
                 }
                 timePassed = 0f;
-                anim.SetBool("Walk", false);
                 running = false;
                 attacking = false;
                 selected = false;

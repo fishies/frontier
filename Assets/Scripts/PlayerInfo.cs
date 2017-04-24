@@ -68,7 +68,7 @@ public class PlayerInfo : MonoBehaviour
 		}*/
 	}
 
-	void CalculateIncome ()
+	public void CalculateIncome ()
 	{ //This should be called at the start of the player's turn
 		foreach (Production p in Object.FindObjectsOfType<Production>()) {
 			if (p.ownerID == playerID) {

@@ -32,6 +32,13 @@ public class GameManager : MonoBehaviour {
 
         currentPlayer %= playerCount;
 		++currentPlayer;
-        
-	}
+
+        foreach (PlayerInfo pi in GameObject.FindObjectsOfType<PlayerInfo>())
+        {
+            if (pi.playerID == currentPlayer) {
+                pi.CalculateIncome();
+            }
+            break;
+        }
+    }
 }
