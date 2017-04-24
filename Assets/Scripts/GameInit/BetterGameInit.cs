@@ -9,22 +9,22 @@ public class BetterGameInit : MonoBehaviour {
 
 	private const int boardX = 10;
 	private const int boardY = 7;
-	private const int uiPxTop = 150;
-	private const int uiPxBot = 150;
+
+	private Vector2 topLeft = new Vector2 (-15.0f, 10.5f);
 
 	private const int halfSize = (boardX * boardY) / 2;
 
 	void Awake() {generateBoard ();}
 
 	public void generateBoard () {
-		Vector2 boardSizeOnScreen = new Vector2 (Screen.width, Screen.height - uiPxBot - uiPxTop); // kore wa geemu jamu desu
-		Vector2 cellSizeOnScreen = new Vector2 (boardSizeOnScreen.x / boardX, boardSizeOnScreen.y / boardY);
+		Vector2 boardSize = new Vector2 ((-topLeft.x) - topLeft.x, topLeft.y - (-topLeft.y));
+		Vector2 cellSize = new Vector2 (boardSize.x / boardX, boardSize.y / boardY);
 
 		List<Vector2> positionWithinCell = new List<Vector2>();
 		for (int i = 0; i < halfSize; ++i) {
-			positionWithinCell.Add(new Vector2(Random.value * cellSizeOnScreen.x, Random.value * cellSizeOnScreen.y));
+			positionWithinCell.Add(new Vector2(Random.value * cellSize.x, Random.value * cellSize.y));
 		}
-		positionWithinCell [27] = new Vector2 (0.5f * cellSizeOnScreen.x, 0.5f * cellSizeOnScreen.y);
+		positionWithinCell [27] = new Vector2 (0.5f * cellSize.x, 0.5f * cellSize.y);
 
 		List<int> villageSize = new List<int>();
 		List<Production.Resource> villageType = new List<Production.Resource>();
@@ -41,10 +41,14 @@ public class BetterGameInit : MonoBehaviour {
 				if (!(i == 28 && villageSize[20] > 0)) { // i really hope the compiler does manual loop unrolling lol
 					// probability of placing something should depend heavily on remaining elements in bucket
 					// it should also approach 1 as i approaches halfSize
-					if (Random.value > ((1.0f * (i + 0.625f) * sizeBucket.Count) / (halfSize - 1.125f))) {
-						int indexHit = Random.Range (0, sizeBucket.Count);
-						currSize = sizeBucket[indexHit];
-						sizeBucket.RemoveAt (indexHit);
+					if (Random.value > ((1.0f * (i + 0.125f) * sizeBucket.Count) / (halfSize - 1.625f))) {
+						int indexHit;
+
+						if (sizeBucket.Count > 0) {
+							indexHit = Random.Range (0, sizeBucket.Count);
+							currSize = sizeBucket [indexHit];
+							sizeBucket.RemoveAt (indexHit);
+						}
 
 						if (typeBucket.Count < 1) { // refill the bucket!
 							typeBucket.Add (Production.Resource.Cement);
@@ -66,7 +70,7 @@ public class BetterGameInit : MonoBehaviour {
 		sizeBucket.Add (2);
 		sizeBucket.Add (1);
 		sizeBucket.Add (1);
-		HashSet<int> innerIndices = new HashSet<int>{27,28,29,30,20,21,22,14,15,9}; // game jam stratz
+		HashSet<int> innerIndices = new HashSet<int>{27,28,29,20,21,14}; // game jam stratz
 
 		// place outer farms
 		for (int i = 0; sizeBucket.Count > 0; i = (i+1) % halfSize) {
@@ -93,9 +97,10 @@ public class BetterGameInit : MonoBehaviour {
 			for (int col = 0; col < row + 2; ++col, ++i) {
 				if (villageSize[i] > 0) {
 				//do math with row/col num to get screen coords
-					Vector3 spawnLoc = Camera.main.ScreenToWorldPoint(new Vector3
-							(cellSizeOnScreen.x * col + positionWithinCell[i].x,
-							(Screen.height) - (cellSizeOnScreen.y * row + positionWithinCell[i].y + uiPxTop), 1.0f));
+					Vector3 spawnLoc = Vector3.Reflect(
+						new Vector3 (cellSize.x * col + positionWithinCell[i].x - Mathf.Abs(topLeft.x),
+						(cellSize.y * row + positionWithinCell[i].y - Mathf.Abs(topLeft.y)),0.0f),
+						Vector3.up);
 				//instantiate based on production type
 					GameObject village = Instantiate(villagePrefab, spawnLoc, Quaternion.identity);
 					Production p = village.GetComponent<Production> ();
@@ -131,13 +136,14 @@ public class BetterGameInit : MonoBehaviour {
 		//villageType = reversedList (villageType);
 
 		// yes i literally copypasted but i gotta change some shit too
-		for (int row = 0, i = 0; row < boardY; ++row) {
-			for (int col = row + 2; col < boardX; ++col, ++i) {
+		for (int row = 0, i = halfSize-1; row < boardY; ++row) {
+			for (int col = row + 2; col < boardX; ++col, --i) {
 				if (villageSize[i] > 0) {
 					//do math with row/col num to get screen coords
-					Vector3 spawnLoc = Camera.main.ScreenToWorldPoint(new Vector3
-						(cellSizeOnScreen.x * col + positionWithinCell[i].x,
-							(Screen.height) - (cellSizeOnScreen.y * row + positionWithinCell[i].y + uiPxTop), 1.0f));
+					Vector3 spawnLoc = Vector3.Reflect(
+						new Vector3 (cellSize.x * col - positionWithinCell[i].x - Mathf.Abs(topLeft.x),
+							(cellSize.y * row - positionWithinCell[i].y - Mathf.Abs(topLeft.y)),0.0f),
+						Vector3.up);
 					//instantiate based on production type
 					GameObject village = Instantiate(villagePrefab, spawnLoc, Quaternion.identity);
 					Production p = village.GetComponent<Production> ();
