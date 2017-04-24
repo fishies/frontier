@@ -20,12 +20,13 @@ public class RoadHandler : MonoBehaviour {
 			(point1.position.y + point2.position.y) / 2,
 			0);
 
-		float angle = Mathf.Atan(Mathf.Abs(point2.position.y - point1.position.y) /
-			Mathf.Abs(point2.position.x - point1.position.x)) * Mathf.Rad2Deg;
-		Quaternion currentRotation = transform.rotation;
-		currentRotation = currentRotation * Quaternion.AngleAxis(angle + 90, Vector3.forward);
+		float angle = Mathf.Atan2(point2.position.y - point1.position.y, point2.position.x - point1.position.x) * Mathf.Rad2Deg;
+        /*
+        Mathf.Atan(Mathf.Abs(point2.position.y - point1.position.y) /
+        Mathf.Abs(point2.position.x - point1.position.x)) * Mathf.Rad2Deg;*/
+        Quaternion currentRotation = Quaternion.AngleAxis(angle, Vector3.forward);
 		gameObject.transform.rotation = currentRotation;
-		gameObject.transform.localScale = new Vector3(1, Vector3.Distance(point1.position, point2.position), 0);
+		gameObject.transform.localScale = new Vector3(Vector3.Distance(point1.position, point2.position), 1, 1);
 
         gameObject.GetComponent<LineRenderer>().material.mainTextureScale = new Vector2(Vector3.Distance(point1.position, point2.position) * 2, 1);
 	}

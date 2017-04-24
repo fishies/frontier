@@ -21,33 +21,7 @@ public class Damagable : MonoBehaviour
 
 	void Awake ()
 	{
-		Production p = gameObject.GetComponent<Production> ();
-		text = gameObject.GetComponentInChildren<TextMesh> ();
-		//text.color = Color.black;
-		if (p != null) {
-			// text.color [(p.ownerID % 3)] = 1.0f;
-			// Cannot modify a value type return value of 'UnityEngine.TextMesh.color'??????
-
-			switch (p.ownerID % 5) {
-			case 0:
-				text.color = Color.green;
-				break;
-			case 1:
-				text.color = Color.blue;
-				break;
-			case 2:
-				text.color = Color.red;
-				break;
-			case 3:
-				text.color = Color.yellow;
-				break;
-			case 4:
-				text.color = Color.magenta;
-				break;
-			default:
-				break;
-			}
-		}
+        InitColor();
 	}
 
     void Start() {
@@ -64,6 +38,47 @@ public class Damagable : MonoBehaviour
 			Destroy (gameObject);
 		}
 	}
+
+    public void InitColor()
+    {
+        Production p = gameObject.GetComponent<Production>();
+
+        if (GetComponent<RoadHandler>() != null)
+        {
+            text = transform.parent.GetComponentInChildren<TextMesh>();
+        } else
+        {
+            text = gameObject.GetComponentInChildren<TextMesh>();
+        }
+
+        //text.color = Color.black;
+        if (p != null)
+        {
+            // text.color [(p.ownerID % 3)] = 1.0f;
+            // Cannot modify a value type return value of 'UnityEngine.TextMesh.color'??????
+
+            switch (p.ownerID % 5)
+            {
+                case 0:
+                    text.color = Color.green;
+                    break;
+                case 1:
+                    text.color = Color.red;
+                    break;
+                case 2:
+                    text.color = Color.blue;
+                    break;
+                case 3:
+                    text.color = Color.yellow;
+                    break;
+                case 4:
+                    text.color = Color.magenta;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
 	public void takeDamage (int attackStrength)
 	{

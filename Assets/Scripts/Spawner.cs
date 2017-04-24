@@ -71,6 +71,7 @@ public class Spawner : MonoBehaviour {
             }
             pay(cost_types[(int)type], costs[(int)type]);
             go.GetComponent<Production>().ownerID = PlayerID;
+            go.GetComponent<Damagable>().InitColor();
             //go.transform.position = pos;
             return true;
         }else {
@@ -99,7 +100,8 @@ public class Spawner : MonoBehaviour {
             pay(cost_types[(int)type], price);
             GameObject go = Instantiate(road);
             //audioSources[4].Play();
-            go.GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
+            go.transform.GetChild(0).GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
+            //go.GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
             t_one.GetComponent<Production>().ownerID = PlayerID;
             t_two.GetComponent<Production>().ownerID = PlayerID;
             return true;
