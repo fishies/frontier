@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour {
     private TowerPlacer tp;
 
     void Start() {
+        mode = Modes.SELECT;
         rop = GetComponentInChildren<RoadPlacer>();
         rap = GetComponentInChildren<RaiderPlacer>();
         tp = GetComponentInChildren<TowerPlacer>();

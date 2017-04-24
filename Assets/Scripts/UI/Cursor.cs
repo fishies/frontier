@@ -12,6 +12,7 @@ public class Cursor : MonoBehaviour {
                                                 GameObject.Find("RoadIcon"),
                                                 GameObject.Find("RaiderIcon"),
                                                 GameObject.Find("TowerIcon")};
+        ChangeActiveItem(0);
     }
 
     public void ChangeActiveItem(int currentItem) {
@@ -22,7 +23,7 @@ public class Cursor : MonoBehaviour {
     }
 
     void Update() {
-        if(Input.GetKeyDown("1") || Input.GetKeyDown("escape")) {
+        if(Input.GetKeyDown("1") || Input.GetKeyDown("escape") || Input.GetKeyDown(KeyCode.Space)) {
             ChangeActiveItem(0);
         }
         else if(Input.GetKeyDown("2")) {
