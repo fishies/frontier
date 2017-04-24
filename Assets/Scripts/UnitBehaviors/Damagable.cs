@@ -40,7 +40,6 @@ public class Damagable : MonoBehaviour
 				break;
 			case 3:
 				text.color = Color.yellow;
-            return 
 				break;
 			case 4:
 				text.color = Color.magenta;
