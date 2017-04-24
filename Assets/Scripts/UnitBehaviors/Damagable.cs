@@ -83,6 +83,7 @@ public class Damagable : MonoBehaviour
 	public void takeDamage (int attackStrength)
 	{
 		if (tag == "Capital") {
+            Debug.Log("works");
 			GetComponent<PlayerInfo> ().stockpile [(int)Production.Resource.Food] -= attackStrength;
 		} else {
 			health -= attackStrength;
