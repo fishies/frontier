@@ -19,6 +19,7 @@ public class Spawner : MonoBehaviour {
 
     private static Production.Resource[] cost_types;
     private static int[] costs;
+    private AudioSource[] audioSources = GameObject.Find("AudioPlayer").GetComponents<AudioSource>();
 
     void Start() {
         pi = GetComponent<PlayerInfo>();
@@ -62,8 +63,10 @@ public class Spawner : MonoBehaviour {
             if(type == Objs.RAIDER) {
                 go = Instantiate(raider, pos, new Quaternion(0, 0, 0, 0));
 				go.GetComponent<Production>().income[(int) Production.Resource.Food] -= 1; //LOL MAGIC NUMBER :^)
+                audioSources[2].Play();
             }else if(type == Objs.TOWER) {
                 go = Instantiate(tower, pos, new Quaternion(0, 0, 0, 0));
+                audioSources[4].Play();
             }
             pay(cost_types[(int)type], costs[(int)type]);
             go.GetComponent<Production>().ownerID = PlayerID;
@@ -91,6 +94,7 @@ public class Spawner : MonoBehaviour {
         if (can_pay(cost_types[(int)type], price)) {
             pay(cost_types[(int)type], price);
             GameObject go = Instantiate(road);
+            audioSources[4].Play();
             go.GetComponent<RoadHandler>().setEndpoints(t_one, t_two);
             t_one.GetComponent<Production>().ownerID = PlayerID;
             t_two.GetComponent<Production>().ownerID = PlayerID;
@@ -99,5 +103,6 @@ public class Spawner : MonoBehaviour {
             return false;
         }
     }
+
 
 }
