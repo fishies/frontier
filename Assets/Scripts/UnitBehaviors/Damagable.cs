@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
+
+    private int _health;
 	public int health
 	{
-		get { return health; }
+		get { return _health; }
 		set {
-				health = value;
+				_health = value;
 				text.text = "";
-				for (int i = 0; i < health; ++i) {
+				for (int i = 0; i < _health; ++i) {
 					text.text += "♥";
 				}
 			}
@@ -38,6 +40,7 @@ public class Damagable : MonoBehaviour
 				break;
 			case 3:
 				text.color = Color.yellow;
+            return 
 				break;
 			case 4:
 				text.color = Color.magenta;
