@@ -48,6 +48,14 @@ public class Damagable : MonoBehaviour
 		}
 	}
 
+    void Start() {
+        if(GetComponent<RoadHandler>() == null) {
+            health = 2;
+        } else {
+            health = 3;
+        }
+    }
+
 	void Update ()
 	{
 		if (health <= 0) {
