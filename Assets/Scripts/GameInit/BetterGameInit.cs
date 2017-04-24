@@ -14,7 +14,7 @@ public class BetterGameInit : MonoBehaviour {
 
 	private const int halfSize = (boardX * boardY) / 2;
 
-	//void Awake() {generateBoard ();}
+	void Awake() {generateBoard ();}
 
 	public void generateBoard () {
 		Vector2 boardSizeOnScreen = new Vector2 (Screen.width, Screen.height - uiPxBot - uiPxTop); // kore wa geemu jamu desu
