@@ -26,7 +26,7 @@ public class TowerBehavior : MonoBehaviour {
         inputManager = GameObject.FindObjectOfType<InputManager>();
         gameManager = GameObject.FindObjectOfType<GameManager>();
 
-    line = GetComponentInChildren<LineRenderer>();
+        line = GetComponentInChildren<LineRenderer>();
         line.useWorldSpace = false;
         line.material = new Material(Shader.Find("Particles/Additive"));
         line.startColor = new Color(1, 0, 0);
